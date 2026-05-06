@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PichaAI Test</title>
+</head>
+<body>
+
+  <h2>PichaAI Test</h2>
+
+  <button onclick="testAI()">Test AI</button>
+
+  <h3>Response:</h3>
+  <pre id="output">Waiting...</pre>
+
+  <script>
+    async function testAI() {
+      document.getElementById('output').innerText = "Loading...";
+
+      try {
+        const res = await fetch('http://localhost:3000/api/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            prompt: "Give me a business idea in Kenya"
+          })
+        });
+
+        const data = await res.json();
+
+        document.getElementById('output').innerText = data.result;
+
+      } catch (error) {
+        document.getElementById('output').innerText = "Error: " + error.message;
+      }
+    }
+  </script>
+
+</body>
+</html>
